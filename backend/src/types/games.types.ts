@@ -16,18 +16,18 @@ export interface Game {
         q2: number,
         q3: number,
         q4: number,  
-        ot1: number,
-        ot2: number,
-        ot3:number,
+        ot1: number | null,
+        ot2: number| null,
+        ot3:number | null,
     };
     awayPeriods: {
         q1: number,
         q2: number,
         q3: number,
         q4: number,  
-        ot1: number,
-        ot2: number,
-        ot3:number,
+        ot1: number | null,
+        ot2: number| null,
+        ot3:number | null,
     };
     date: string;
     season: number;
