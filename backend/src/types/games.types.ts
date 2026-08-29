@@ -33,3 +33,9 @@ export interface Game {
     season: number;
     status: string;
 }
+
+export interface TeamGamesQuery {
+    teamId: number;
+    season: number;
+    limit: number;
+}
