@@ -1,13 +1,11 @@
+
 import type { BallDontLieGame } from "../types/ballDontLie.types.js";
-import type { Game } from "../types/games.types.ts";
-import {
-  BALLDONTLIE_API_KEY,
-  BALLDONTLIE_BASE_URL,
-} from '../../config.js';
+import type { Game } from "../types/games.types.js";
 
 
 
-export const mapApiToGame = (apiGame: BallDontLieGame) => {
+
+export const mapApiToGame = (apiGame: BallDontLieGame) : Game => {
   return {
     id: apiGame.id,
     date: apiGame.date,
@@ -46,40 +44,3 @@ export const mapApiToGame = (apiGame: BallDontLieGame) => {
   };
 };
 
-export const getTeamGames = async (
-  teamId: number,
-  season: number,
-  limit: number,
-): Promise<Game[]> => {
-  
-  
- const API_KEY = BALLDONTLIE_API_KEY;
- const BASE_URL = BALLDONTLIE_BASE_URL;
-
-  const response = await fetch(
-    `${BASE_URL}/nba/v1/games?team_ids[]=${teamId}&seasons[]=${season}&per_page=${limit}`,
-    {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-      },
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch games for team ${teamId} in season ${season}`,
-    );
-  };
-  
- 
-
-  const data = await response.json();
-  
-   if(!data || !data.data){
-    throw new Error(
-      `No data returned for team ${teamId} in season ${season}`,
-    );
-  }
-  console.log("Fetched games:", data.data.map(mapApiToGame));
-  return data.data.map(mapApiToGame);
-};
