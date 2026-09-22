@@ -14,7 +14,7 @@ app.use(logger);
 
 app.use(healthRoutes);
 app.use(trendsRoutes);
-const port = 3000;
+const port = Number(process.env.Port) || 3000;
 
 //Custom errorHandler
 app.use(customErrorHandler);
