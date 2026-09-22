@@ -1,7 +1,7 @@
 import type { Team } from "../types/trends.types";
 import type { TeamTotalTrendQuery, TrendResult } from "../types/trends.types";
 
-const API_URL = "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const analyzeTeamTotalTrend = async (
   query: TeamTotalTrendQuery,
