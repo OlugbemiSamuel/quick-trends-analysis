@@ -4,10 +4,14 @@ import healthRoutes from "./routes/health.routes.js";
 import trendsRoutes from "./routes/trends.routes.js";
 import logger from "./middleware/logger.js";
 import customErrorHandler from "./middleware/customError.js";
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 app.use(logger);
+
 app.use(healthRoutes);
 app.use(trendsRoutes);
 const port = 3000;

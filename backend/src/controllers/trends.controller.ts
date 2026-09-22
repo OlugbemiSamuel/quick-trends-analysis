@@ -1,5 +1,5 @@
 import type { Response, Request, NextFunction } from "express";
-import { analyzeTeamTotalTrend } from "../services/trends.service.js";
+import { analyzeTeamTotalTrend, getTeams } from "../services/trends.service.js";
 import type { TeamTotalTrendQuery } from "../types/trends.types.js";
 
 export const analyzeTrends = async (
@@ -8,18 +8,19 @@ export const analyzeTrends = async (
   next: NextFunction,
 ) => {
   try {
+    const { season, limit, line, teamId } = req.body;
     const reqData: TeamTotalTrendQuery = {
-      season: req.body.season,
-      teamId: req.body.teamId,
-      limit: req.body.limit,
-      line: req.body.line,
+      season,
+      limit,
+      line,
+      teamId,
     };
 
     if (
-      reqData.season === undefined ||
-      reqData.teamId === undefined ||
-      reqData.limit === undefined ||
-      reqData.line === undefined
+      season === undefined ||
+      teamId === undefined ||
+      limit === undefined ||
+      line === undefined
     ) {
       return res.status(400).json({
         message: "One or more request inputs are missing",
@@ -27,10 +28,10 @@ export const analyzeTrends = async (
     }
 
     if (
-      typeof reqData.season !== "number" ||
-      typeof reqData.teamId !== "number" ||
-      typeof reqData.line !== "number" ||
-      typeof reqData.limit !== "number"
+      typeof season !== "number" ||
+      typeof teamId !== "number" ||
+      typeof line !== "number" ||
+      typeof limit !== "number"
     ) {
       return res.status(400).json({ message: "Request input must be numbers" });
     }
@@ -38,6 +39,19 @@ export const analyzeTrends = async (
     const teamTotalTrend = await analyzeTeamTotalTrend(reqData);
 
     return res.json(teamTotalTrend);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getTeamsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const teams = await getTeams();
+    return res.json(teams);
   } catch (error) {
     next(error);
   }

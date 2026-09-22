@@ -1,4 +1,7 @@
-import { getTeamGames } from "../repository/balldontlie.repository.js";
+import {
+  getTeamGames,
+  getTeamsFromRepository,
+} from "../repository/balldontlie.repository.js";
 import type { TeamTotalTrendQuery } from "../types/trends.types.js";
 import { calculateTrend } from "../engine/trend.engine.js";
 import { AppError } from "../errors/appError.js";
@@ -32,4 +35,13 @@ export const analyzeTeamTotalTrend = async (query: TeamTotalTrendQuery) => {
     line: query.line,
   });
   return trendResult;
+};
+
+export const getTeams = async () => {
+  const teams = await getTeamsFromRepository();
+  if (teams.length === 0) {
+    throw new AppError(`No teams were returned`, 404);
+  }
+  const nbaTeams = teams.filter((team) => team.id <= 30);
+  return nbaTeams;
 };

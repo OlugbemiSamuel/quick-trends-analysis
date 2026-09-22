@@ -1,20 +1,34 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import "./App.css";
 import type { TeamTotalTrendQuery, TrendResult } from "./types/trends.types";
-import { analyzeTeamTotalTrend } from "./services/trends.service";
+import { analyzeTeamTotalTrend, getTeams } from "./services/trends.service";
 import TrendResultCard from "./components/TrendResultCard";
 import { AnalysisForm } from "./components/AnalysisForm";
-// import { AnalysisForm } from "./components/AnalysisForm";
+import type { Team } from "./types/trends.types";
 
 const App = () => {
   const [result, setResult] = useState<TrendResult | null>(null);
+  const [teams, setTeams] = useState<Team[]>([]);
+
   const [lastQuery, setLastQuery] = useState<TeamTotalTrendQuery | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const loadTeams = async () => {
+      try {
+        const teams = await getTeams();
+        setTeams(teams);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+      }
+    };
+    loadTeams();
+  }, []);
+
   const handleAnalysis = async (query: TeamTotalTrendQuery) => {
-    console.log("HANDLE ANALYSIS RECEIVED:", query);
     setLoading(true);
     setError(null);
 
@@ -78,41 +92,43 @@ const App = () => {
               </header>
 
               <div className=" ">
-                <AnalysisForm onSubmit={handleAnalysis} loading={loading} />
-
-                {!loading && !error && !result && (
-                  <div className="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-                    <p className="font-semibold text-slate-800">
-                      No analysis yet
-                    </p>
-
-                    <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
-                      Choose a team and your analysis parameters to see
-                      historical trend results here.
-                    </p>
-                  </div>
-                )}
+                <AnalysisForm
+                  teams={teams}
+                  onSubmit={handleAnalysis}
+                  loading={loading}
+                />
               </div>
+
+              {error && !loading && (
+                <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-5">
+                  <p className="font-semibold text-red-700">Analysis failed</p>
+
+                  <p className="mt-1 text-sm text-red-600">{error}</p>
+                </div>
+              )}
             </>
           )}
 
           {loading && (
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-8 text-center">
-              <p className="font-medium text-slate-700">
-                Analyzing historical games...
-              </p>
+            <div className="mt-8 flex flex-col items-center justify-center py-6 text-center ">
+              {/*  Animated Spinner Container */}
+              <div className="relative flex h-12 w-12 items-center justify-center">
+                <div className="absolute h-full w-full rounded-full border-4 border-slate-100" />
 
-              <p className="mt-1 text-sm text-slate-500">
-                Fetching data and calculating the trend.
-              </p>
-            </div>
-          )}
+                {/* Inner fast spinning brand ring */}
+                <div className="absolute h-full w-full animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+              </div>
 
-          {error && !loading && (
-            <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-5">
-              <p className="font-semibold text-red-700">Analysis failed</p>
+              {/* Typography Section */}
+              <div className="mt-4 max-w-xs">
+                <h3 className="text-sm font-semibold text-slate-900 tracking-tight">
+                  Analyzing Historical Games
+                </h3>
 
-              <p className="mt-1 text-sm text-red-600">{error}</p>
+                <p className="mt-1 text-xs leading-5 text-slate-400">
+                  Fetching historical games and calculating the trend.
+                </p>
+              </div>
             </div>
           )}
 
@@ -122,6 +138,7 @@ const App = () => {
                 onReset={handleReset}
                 result={result}
                 query={lastQuery}
+                teams={teams}
               />
             </div>
           )}

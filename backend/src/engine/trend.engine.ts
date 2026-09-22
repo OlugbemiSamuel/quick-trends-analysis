@@ -32,15 +32,16 @@ export const extractTeamScores = (games: Game[], teamId: number) => {
 export const calculateHits = (teamScores: number[], line: number) => {
   let hits = 0;
   teamScores.forEach((score) => {
-    if (score > line) hits++;
+    if (score >= line) hits++;
   });
   return hits;
 };
 
 export const calculateAverageScore = (teamScores: number[]) => {
   if (teamScores.length === 0) return 0;
-  const totalScore = teamScores.reduce((acc, score) => acc + score, 0);
-  const avgScore = totalScore / teamScores.length;
+  const avgScore =
+    teamScores.reduce((acc, score) => acc + score, 0) / teamScores.length;
+  // const avgScore = totalScore / teamScores.length;
   return Math.round(avgScore * 100) / 100;
 };
 

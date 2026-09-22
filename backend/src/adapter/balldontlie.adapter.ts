@@ -1,11 +1,10 @@
+import type {
+  BallDontLieGame,
+  BallDontLieTeam,
+} from "../types/ballDontLie.types.js";
+import type { Game, Team } from "../types/games.types.js";
 
-import type { BallDontLieGame } from "../types/ballDontLie.types.js";
-import type { Game } from "../types/games.types.js";
-
-
-
-
-export const mapApiToGame = (apiGame: BallDontLieGame) : Game => {
+export const mapApiToGame = (apiGame: BallDontLieGame): Game => {
   return {
     id: apiGame.id,
     date: apiGame.date,
@@ -44,3 +43,10 @@ export const mapApiToGame = (apiGame: BallDontLieGame) : Game => {
   };
 };
 
+export const mapApiToTeam = (apiTeam: BallDontLieTeam): Team => {
+  return {
+    id: apiTeam.id,
+    name: apiTeam.full_name,
+    shortName: apiTeam.abbreviation,
+  };
+};
