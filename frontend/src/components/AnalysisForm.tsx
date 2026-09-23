@@ -9,14 +9,14 @@ interface AnalysisFormProps {
 
 const SEASON_OPTIONS = [
   // The user sees "2023-24", but the backend receives 2024.
-  { label: "2023-24", value: 2024 },
-  { label: "2024-25", value: 2025 },
-  { label: "2025-26", value: 2026 },
+  { label: "2023-24", value: 2023 },
+  { label: "2024-25", value: 2024 },
+  { label: "2025-26", value: 2025 },
 ];
 
 const SAMPLE_SIZES = [5, 10, 15, 20];
 
-const DEFAULT_SEASON = 2026;
+const DEFAULT_SEASON = 2025;
 const DEFAULT_LIMIT = 10;
 const DEFAULT_LINE = 110;
 

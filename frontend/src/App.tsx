@@ -110,7 +110,7 @@ const App = () => {
           )}
 
           {loading && (
-            <div className="mt-8 flex flex-col items-center justify-center py-6 text-center ">
+            <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-50 py-6 text-center  ">
               {/*  Animated Spinner Container */}
               <div className="relative flex h-12 w-12 items-center justify-center">
                 <div className="absolute h-full w-full rounded-full border-4 border-slate-100" />
