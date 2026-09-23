@@ -16,9 +16,9 @@ const SEASON_OPTIONS = [
 
 const SAMPLE_SIZES = [5, 10, 15, 20];
 
-const DEFAULT_SEASON = 2025;
+const DEFAULT_SEASON = 2026;
 const DEFAULT_LIMIT = 10;
-const DEFAULT_LINE = 120;
+const DEFAULT_LINE = 110;
 
 import { useEffect, useRef, useState } from "react";
 

@@ -47,7 +47,7 @@ const TrendResultCard = ({
           <button
             type="button"
             onClick={onReset}
-            className="self-start rounded-xl border border-orange-600 bg-white px-4 py-2 text-xs font-semibold text-orange-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
+            className="self-start rounded-xl border border-white-600 bg-orange-600 px-4 py-2 text-xs sm:text-md font-semibold text-white - transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
           >
             + New Analysis
           </button>

@@ -41,7 +41,6 @@ export const calculateAverageScore = (teamScores: number[]) => {
   if (teamScores.length === 0) return 0;
   const avgScore =
     teamScores.reduce((acc, score) => acc + score, 0) / teamScores.length;
-  // const avgScore = totalScore / teamScores.length;
   return Math.round(avgScore * 100) / 100;
 };
 
