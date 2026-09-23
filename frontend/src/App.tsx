@@ -80,11 +80,11 @@ const App = () => {
                 </div>
 
                 <div className="mt-6">
-                  <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+                  <h2 className="sm:text-3xl text-xl font-bold tracking-tight text-slate-900">
                     Analyze historical basketball trends
                   </h2>
 
-                  <p className="mt-2 max-w-2xl text-slate-500">
+                  <p className="mt-2 max-w-2xl text-sm text-slate-500">
                     Enter a team's analysis parameters and get historical trend
                     results in a few seconds.
                   </p>
